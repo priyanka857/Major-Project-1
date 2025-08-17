@@ -1,12 +1,19 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+
 function ProductScreen({ product }) {
+  const BASE_URL = process.env.REACT_APP_API_URL;
+
+  const imageUrl = product.image
+    ? `${BASE_URL}/media/products/${product.image}`
+    : "/default-image.png"; // fallback image if needed
+
   return (
     <>
       <Card className="my-3 p-3 rounded">
         <Link to={`/product/${product._id}`}>
-          <Card.Img src={product.image} />
+          <Card.Img src={imageUrl} />
         </Link>
 
         <Card.Body>
