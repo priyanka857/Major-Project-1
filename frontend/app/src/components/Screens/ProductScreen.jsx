@@ -4,18 +4,15 @@ import { Link } from "react-router-dom";
 
 function ProductScreen({ product }) {
   const BASE_URL = process.env.REACT_APP_API_URL;
-
   const imageUrl = product.image
-    ? `${BASE_URL}/media/products/${product.image}`
-    : "/default-image.png"; // fallback image if needed
+    ? `${BASE_URL}${product.image}`
+    : "/default-image.png";
 
   return (
-    <>
-      <Card className="my-3 p-3 rounded">
-        <Link to={`/product/${product._id}`}>
-          <Card.Img src={imageUrl} />
-        </Link>
-
+    <Card className="my-3 p-3 rounded">
+      <Link to={`/product/${product._id}`}>
+        <Card.Img src={imageUrl} alt={product.name} />
+      </Link>
         <Card.Body>
           <Link to={`/product/${product._id}`}>
             <Card.Title>
