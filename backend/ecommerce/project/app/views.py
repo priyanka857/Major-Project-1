@@ -133,6 +133,8 @@ class ActivateAccountView(APIView):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def addOrderItems(request):
+    print("request.user:", request.user)
+    print("request.auth:", request.auth)
     user = request.user
     data = request.data
     orderItems = data.get('orderItems')
