@@ -20,6 +20,8 @@ import {
 import { CART_CLEAR_ITEMS } from '../constants/cartConstants';
 
 // Create new order
+const apiBaseUrl = process.env.REACT_APP_API_URL || "";
+
 export const createOrder = (order) => async (dispatch, getState) => {
   try {
     dispatch({ type: ORDER_CREATE_REQUEST });
@@ -34,18 +36,16 @@ export const createOrder = (order) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
+    console.log('Order Create - Token:', userInfo.token);
 
-    // Make sure your backend URL is correct; adjust if needed
-    const { data } = await axios.post('/api/orders/add/', order, config);
-    console.log('Token being sent:', userInfo.token);
 
+    const { data } = await axios.post(`${apiBaseUrl}/api/orders/add/`, order, config);
 
     dispatch({
       type: ORDER_CREATE_SUCCESS,
       payload: data,
     });
 
-    // Clear cart after order is created
     dispatch({ type: CART_CLEAR_ITEMS });
     localStorage.removeItem('cartItems');
   } catch (error) {
@@ -58,6 +58,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
     });
   }
 };
+
 
 // Get order details by id
 export const getOrderDetails = (id) => async (dispatch, getState) => {
@@ -106,11 +107,8 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.put(
-      `/api/orders/${order._id}/deliver/`,
-      {},
-      config
-    );
+    const { data } = await axios.put(`${apiBaseUrl}/api/orders/${order._id}/deliver/`, {}, config);
+
 
     dispatch({
       type: ORDER_DELIVER_SUCCESS,
@@ -142,7 +140,8 @@ export const listOrders = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get('/api/orders/', config);
+    const { data } = await axios.get(`${apiBaseUrl}/api/orders/`, config);
+
 
     dispatch({
       type: ORDER_LIST_SUCCESS,
@@ -176,7 +175,8 @@ export const listMyOrders = () => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get('/api/orders/myorders/', config);
+    const { data } = await axios.get(`${apiBaseUrl}/api/orders/myorders/`, config);
+
 
     dispatch({
       type: ORDER_LIST_MY_SUCCESS,

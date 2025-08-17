@@ -7,13 +7,13 @@ import {
 
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
-  const { data } = await axios.get(`/api/product/${id}`);
+  const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/product/${id}/`)
 
   dispatch({
     type: CART_ADD_ITEM,
     payload: {
       product: data._id,
-      productname: data.productname,
+      productname: data.name,        // changed from productname to name based on your backend JSON
       image: data.image,
       price: data.price,
       countInStock: data.countInStock,
@@ -21,7 +21,6 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
     },
   });
 
- 
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 };
 
