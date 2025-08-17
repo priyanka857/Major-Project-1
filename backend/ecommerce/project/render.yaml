@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: major-project-1
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn project.wsgi
+    staticPublishPath: media
