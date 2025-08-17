@@ -11,11 +11,9 @@ import {
   createProduct,
 } from "../../action/productAction";
 
-
 function ProductListScreen() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const [showDeleteSuccess, setShowDeleteSuccess] = useState(false);
   const [showCreateSuccess, setShowCreateSuccess] = useState(false);
 
@@ -57,7 +55,6 @@ function ProductListScreen() {
         setShowCreateSuccess(false);
         navigate(`/admin/product/${createdProduct._id}/edit`);
       }, 1000);
-
       return () => clearTimeout(timer);
     } else {
       dispatch(listProducts());
@@ -67,12 +64,10 @@ function ProductListScreen() {
   useEffect(() => {
     if (successDelete) {
       setShowDeleteSuccess(true);
-
       const timer = setTimeout(() => {
         setShowDeleteSuccess(false);
         dispatch(listProducts());
       }, 3000);
-
       return () => clearTimeout(timer);
     }
   }, [successDelete, dispatch]);
@@ -86,6 +81,8 @@ function ProductListScreen() {
   const createProductHandler = () => {
     dispatch(createProduct());
   };
+
+  const BASE_URL = process.env.REACT_APP_API_URL;
 
   return (
     <>
@@ -123,6 +120,7 @@ function ProductListScreen() {
         <Table striped bordered hover responsive className="table-sm mt-3">
           <thead>
             <tr>
+              <th>IMAGE</th>
               <th>ID</th>
               <th>NAME</th>
               <th>PRICE</th>
@@ -132,30 +130,43 @@ function ProductListScreen() {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
-              <tr key={product._id}>
-                <td>{product._id}</td>
-                <td>{product.name}</td>
-                <td>₹{product.price}</td>
-                <td>{product.category}</td>
-                <td>{product.brand}</td>
-                <td>
-                  <Link to={`/admin/product/${product._id}/edit`}>
-                    <Button variant="light" className="btn-sm">
-                      <i className="fas fa-edit"></i>
-                    </Button>
-                  </Link>
+            {products.map((product) => {
+              const imageUrl = product.image
+                ? `${BASE_URL}/media/products/${product.image}`
+                : "/default-image.png";
 
-                  <Button
-                    variant="danger"
-                    className="btn-sm ms-2"
-                    onClick={() => deleteHandler(product._id)}
-                  >
-                    <i className="fas fa-trash"></i>
-                  </Button>
-                </td>
-              </tr>
-            ))}
+              return (
+                <tr key={product._id}>
+                  <td>
+                    <img
+                      src={imageUrl}
+                      alt={product.name}
+                      style={{ width: "50px", height: "50px", objectFit: "cover" }}
+                    />
+                  </td>
+                  <td>{product._id}</td>
+                  <td>{product.name}</td>
+                  <td>₹{product.price}</td>
+                  <td>{product.category}</td>
+                  <td>{product.brand}</td>
+                  <td>
+                    <Link to={`/admin/product/${product._id}/edit`}>
+                      <Button variant="light" className="btn-sm">
+                        <i className="fas fa-edit"></i>
+                      </Button>
+                    </Link>
+
+                    <Button
+                      variant="danger"
+                      className="btn-sm ms-2"
+                      onClick={() => deleteHandler(product._id)}
+                    >
+                      <i className="fas fa-trash"></i>
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
       )}
