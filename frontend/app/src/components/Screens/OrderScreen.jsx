@@ -46,6 +46,8 @@ const OrderScreen = () => {
   const taxPrice = typeof order.taxPrice === 'number' ? order.taxPrice : 0;
   const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
+  const BASE_URL = process.env.REACT_APP_API_URL;
+
   return loading ? (
     <Loader />
   ) : error && showError ? (
@@ -75,7 +77,9 @@ const OrderScreen = () => {
               {order.isDelivered ? (
                 <Message variant="success">Delivered on {order.deliveredAt}</Message>
               ) : (
-                <Message variant="danger"onClose={handleClose} dismissible>Not Delivered</Message>
+                <Message variant="danger" onClose={handleClose} dismissible>
+                  Not Delivered
+                </Message>
               )}
             </ListGroup.Item>
 
@@ -87,7 +91,9 @@ const OrderScreen = () => {
               {order.isPaid ? (
                 <Message variant="success">Paid on {order.paidAt}</Message>
               ) : (
-                <Message variant="danger"onClose={handleClose} dismissible>Not Paid</Message>
+                <Message variant="danger" onClose={handleClose} dismissible>
+                  Not Paid
+                </Message>
               )}
             </ListGroup.Item>
 
@@ -100,11 +106,16 @@ const OrderScreen = () => {
                   {order.orderItems.map((item, index) => {
                     const price = Number(item.price) || 0;
                     const total = price * (item.qty || 0);
+                    const imageUrl =
+                      item.image && item.image.startsWith('/media/products/')
+                        ? `${BASE_URL}${item.image}`
+                        : '/default-image.png';
+
                     return (
                       <ListGroup.Item key={index}>
                         <Row className="align-items-center">
                           <Col md={2}>
-                            <Image src={item.image} alt={item.name} fluid rounded />
+                            <Image src={imageUrl} alt={item.name} fluid rounded />
                           </Col>
                           <Col>
                             <Link to={`/product/${item.product}`}>{item.name}</Link>
