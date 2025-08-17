@@ -131,9 +131,12 @@ function ProductListScreen() {
           </thead>
           <tbody>
             {products.map((product) => {
-              const imageUrl = product.image
-                ? `${BASE_URL}/media/products/${product.image}`
-                : "/default-image.png";
+              let imageUrl = "/default-image.png";
+              if (product.image) {
+                imageUrl = product.image.startsWith("/media/products/")
+                  ? `${BASE_URL}${product.image}`
+                  : `${BASE_URL}/media/products/${product.image}`;
+              }
 
               return (
                 <tr key={product._id}>
