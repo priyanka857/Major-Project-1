@@ -4,10 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader";
 import Message from "../Message";
-import {
-  listProductDetails,
-  updateProduct,
-} from "../../action/productAction";
+import { listProductDetails, updateProduct } from "../../action/productAction";
 import axios from "axios";
 
 const ProductEditScreen = () => {
@@ -61,6 +58,8 @@ const ProductEditScreen = () => {
     navigate("/admin/productlist");
   };
 
+  const apiBaseUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -73,17 +72,17 @@ const ProductEditScreen = () => {
       const config = {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${userInfo.token}`, // ✅ include token
+          Authorization: `Bearer ${userInfo.token}`,
         },
       };
 
       const { data } = await axios.post(
-        "http://localhost:8000/api/upload/",
+        `${apiBaseUrl}/api/upload/`,
         formData,
         config
       );
 
-      setImage(data.image); // Make sure backend responds with image path
+      setImage(data.image);
       setUploading(false);
     } catch (error) {
       console.error("Image upload failed:", error);
@@ -93,7 +92,10 @@ const ProductEditScreen = () => {
 
   return (
     <>
-      <Button className="btn btn-light my-3" onClick={() => navigate("/admin/productlist")}>
+      <Button
+        className="btn btn-light my-3"
+        onClick={() => navigate("/admin/productlist")}
+      >
         Go Back
       </Button>
       <h1>Edit Product</h1>

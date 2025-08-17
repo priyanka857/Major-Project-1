@@ -17,6 +17,7 @@ function CartScreen() {
   const { id: productId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const apiBaseUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
   const qty = Number(new URLSearchParams(location.search).get("qty")) || 1;
 
@@ -54,7 +55,8 @@ function CartScreen() {
                 <Row className="align-items-center">
                   <Col md={2}>
                     <Image
-                      src={`http://localhost:8000${item.image}`}
+                     src={`${apiBaseUrl}${item.image}`}
+
                       alt={item.name}
                       fluid
                       rounded

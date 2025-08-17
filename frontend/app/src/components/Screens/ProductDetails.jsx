@@ -15,6 +15,7 @@ import Loader from "../Loader";
 import { listProductDetails } from "../../action/productAction";
 
 function ProductDetails() {
+  const apiBaseUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -47,11 +48,8 @@ function ProductDetails() {
       ) : (
         <Row>
           <Col md={6}>
-            <Image
-              src={`http://localhost:8000${product.image}`}
-              alt={product.name}
-              fluid
-            />
+            <Image src={`${apiBaseUrl}${product.image}`} alt={product.name} fluid />
+
           </Col>
 
           <Col md={3}>
