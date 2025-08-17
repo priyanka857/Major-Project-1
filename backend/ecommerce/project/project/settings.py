@@ -13,7 +13,7 @@ SECRET_KEY = os.environ.get(
     "django-insecure-%suidw&fq^w0urpmdww-qwxtk9vg_qaz!je_)!@36ld!j_)eg_"
 )
 
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]  # in production, replace * with your domain or render URL
 
