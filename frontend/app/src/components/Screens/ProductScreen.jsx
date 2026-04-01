@@ -3,7 +3,10 @@ import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function ProductScreen({ product }) {
-  const BASE_URL = process.env.REACT_APP_API_URL;
+  const BASE_URL =
+  window.location.hostname === "localhost"
+    ? "http://127.0.0.1:8000"
+    : "https://major-project-1-azq9.onrender.com";
 
   const imageUrl =
     product && product.image && product.image.startsWith("/media/products/")

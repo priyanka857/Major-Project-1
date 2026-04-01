@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
-import { getOrderDetails } from '../../action/orderAction';
-import Loader from '../Loader';
-import Message from '../Message';
+import React, { useEffect, useState } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
+import { getOrderDetails } from "../../action/orderAction";
+import Loader from "../Loader";
+import Message from "../Message";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -24,30 +24,31 @@ const OrderScreen = () => {
 
   useEffect(() => {
     if (!userInfo) {
-      navigate('/login');
+      navigate("/login");
     } else {
       dispatch(getOrderDetails(orderId));
       setShowError(true); // Reset error visibility when navigating
     }
   }, [dispatch, orderId, userInfo, navigate]);
 
-  const formatPrice = (num) => (typeof num === 'number' ? num.toFixed(2) : '0.00');
+  const formatPrice = (num) =>
+    typeof num === "number" ? num.toFixed(2) : "0.00";
 
   if (!order) return null;
 
   const itemsPrice = order.orderItems
     ? order.orderItems.reduce(
         (acc, item) => acc + Number(item.price || 0) * (item.qty || 0),
-        0
+        0,
       )
     : 0;
 
-  const shippingPrice = typeof order.shippingPrice === 'number' ? order.shippingPrice : 0;
-  const taxPrice = typeof order.taxPrice === 'number' ? order.taxPrice : 0;
+  const shippingPrice =
+    typeof order.shippingPrice === "number" ? order.shippingPrice : 0;
+  const taxPrice = typeof order.taxPrice === "number" ? order.taxPrice : 0;
   const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
-  const BASE_URL = process.env.REACT_APP_API_URL;
-
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
   return loading ? (
     <Loader />
   ) : error && showError ? (
@@ -66,16 +67,19 @@ const OrderScreen = () => {
                 <strong>Name:</strong> {order.user?.name}
               </p>
               <p>
-                <strong>Email:</strong>{' '}
+                <strong>Email:</strong>{" "}
                 <a href={`mailto:${order.user?.email}`}>{order.user?.email}</a>
               </p>
               <p>
-                <strong>Address:</strong>{' '}
-                {order.shippingAddress?.address}, {order.shippingAddress?.city}{' '}
-                {order.shippingAddress?.postalCode}, {order.shippingAddress?.country}
+                <strong>Address:</strong> {order.shippingAddress?.address},{" "}
+                {order.shippingAddress?.city}{" "}
+                {order.shippingAddress?.postalCode},{" "}
+                {order.shippingAddress?.country}
               </p>
               {order.isDelivered ? (
-                <Message variant="success">Delivered on {order.deliveredAt}</Message>
+                <Message variant="success">
+                  Delivered on {order.deliveredAt}
+                </Message>
               ) : (
                 <Message variant="danger" onClose={handleClose} dismissible>
                   Not Delivered
@@ -107,21 +111,29 @@ const OrderScreen = () => {
                     const price = Number(item.price) || 0;
                     const total = price * (item.qty || 0);
                     const imageUrl =
-                      item.image && item.image.startsWith('/media/products/')
+                      item.image && item.image.startsWith("/media/products/")
                         ? `${BASE_URL}${item.image}`
-                        : '/default-image.png';
+                        : "/default-image.png";
 
                     return (
                       <ListGroup.Item key={index}>
                         <Row className="align-items-center">
                           <Col md={2}>
-                            <Image src={imageUrl} alt={item.name} fluid rounded />
+                            <Image
+                              src={imageUrl}
+                              alt={item.name}
+                              fluid
+                              rounded
+                            />
                           </Col>
                           <Col>
-                            <Link to={`/product/${item.product}`}>{item.name}</Link>
+                            <Link to={`/product/${item.product}`}>
+                              {item.name}
+                            </Link>
                           </Col>
                           <Col md={4}>
-                            {item.qty} x ₹{formatPrice(price)} = ₹{formatPrice(total)}
+                            {item.qty} x ₹{formatPrice(price)} = ₹
+                            {formatPrice(total)}
                           </Col>
                         </Row>
                       </ListGroup.Item>

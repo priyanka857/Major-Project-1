@@ -1,10 +1,42 @@
-# Ignore node_modules for both frontend/backend
+# ======================
+# NODE MODULES
+# ======================
 backend/node_modules/
 frontend/node_modules/
 
-# Ignore React build folder
-frontend/build/
-
-# Ignore environment files
+# ======================
+# ENV FILES
+# ======================
 backend/.env
 frontend/.env
+
+# ======================
+# DJANGO
+# ======================
+backend/db.sqlite3
+backend/__pycache__/
+backend/*.pyc
+backend/media/
+backend/staticfiles/
+
+# ======================
+# REACT BUILD
+# ======================
+frontend/build/
+
+# ======================
+# OS FILES
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# IDE FILES
+# ======================
+.vscode/
+.idea/
+
+# ======================
+# LOG FILES
+# ======================
+*.log

@@ -17,7 +17,10 @@ import {
   PRODUCT_DELETE_FAIL,
 } from "../constants/productConstants";
 
-const apiBaseUrl = process.env.REACT_APP_API_URL || "";
+const apiBaseUrl =
+  window.location.hostname === "localhost"
+    ? "http://127.0.0.1:8000"
+    : "https://major-project-1-azq9.onrender.com";
 
 export const listProducts = () => async (dispatch) => {
   try {

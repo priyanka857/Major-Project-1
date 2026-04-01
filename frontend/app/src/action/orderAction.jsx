@@ -20,7 +20,10 @@ import {
 import { CART_CLEAR_ITEMS } from '../constants/cartConstants';
 
 // Create new order
-const apiBaseUrl = process.env.REACT_APP_API_URL || "";
+const apiBaseUrl =
+  window.location.hostname === "localhost"
+    ? "http://127.0.0.1:8000"
+    : "https://major-project-1-azq9.onrender.com";
 
 export const createOrder = (order) => async (dispatch, getState) => {
   try {

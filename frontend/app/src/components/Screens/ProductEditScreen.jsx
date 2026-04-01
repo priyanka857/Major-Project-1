@@ -22,7 +22,7 @@ const ProductEditScreen = () => {
   const [uploading, setUploading] = useState(false);
 
   const { loading, error, product } = useSelector(
-    (state) => state.productDetails
+    (state) => state.productDetails,
   );
 
   const { userInfo } = useSelector((state) => state.userLogin); // ✅ Fix: get userInfo from Redux
@@ -53,7 +53,7 @@ const ProductEditScreen = () => {
         category,
         countInStock,
         description,
-      })
+      }),
     );
     navigate("/admin/productlist");
   };
@@ -79,7 +79,7 @@ const ProductEditScreen = () => {
       const { data } = await axios.post(
         `${apiBaseUrl}/api/upload/`,
         formData,
-        config
+        config,
       );
 
       setImage(data.image);
@@ -132,7 +132,7 @@ const ProductEditScreen = () => {
             {uploading && <Loader />}
             {image && (
               <img
-                src={image}
+                src={`${apiBaseUrl}${image}`}
                 alt="preview"
                 style={{ width: "100px", marginTop: "10px" }}
               />

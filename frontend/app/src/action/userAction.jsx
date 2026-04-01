@@ -24,7 +24,10 @@ import {
   USER_UPDATE_PROFILE_FAIL,
 } from "../constants/userConstants";
 
-const API_BASE_URL = process.env.REACT_APP_API_URL;
+const API_BASE_URL =
+  window.location.hostname === "localhost"
+    ? process.env.REACT_APP_LOCAL_API
+    : process.env.REACT_APP_PROD_API;
 
 // Login Action
 export const login = (email, password) => async (dispatch) => {
@@ -112,7 +115,10 @@ export const listUsers = () => async (dispatch, getState) => {
 
     const config = getAuthConfig(getState);
 
-    const { data } = await axios.get(`${API_BASE_URL}/api/users/getallusers/`, config);
+    const { data } = await axios.get(
+      `${API_BASE_URL}/api/users/getallusers/`,
+      config
+    );
 
     dispatch({ type: USER_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -148,7 +154,10 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 
     const config = getAuthConfig(getState);
 
-    const { data } = await axios.get(`${API_BASE_URL}/api/users/${id}/`, config);
+    const { data } = await axios.get(
+      `${API_BASE_URL}/api/users/${id}/`,
+      config
+    );
 
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
