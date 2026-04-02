@@ -354,11 +354,3 @@ def deleteUser(request, pk):
     except User.DoesNotExist:
         return Response({'detail': 'User not found'}, status=404)
 
-from django.contrib.auth.models import User
-
-if not User.objects.filter(username="priyankapandiyan07@gmail.com").exists():
-    User.objects.create_superuser(
-        username="priyankapandiyan07@gmail.com",
-        email="priyankapandiyan07@gmail.com",
-        password="Priyanka@123"
-    )
