@@ -6,8 +6,4 @@ class AppConfig(AppConfig):
     name = 'app'
 
     def ready(self):
-        from .views import create_superuser_if_not_exists
-        try:
-            create_superuser_if_not_exists()
-        except:
-            pass
+        import app.signals
