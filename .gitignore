@@ -1,42 +1,11 @@
-# ======================
-# NODE MODULES
-# ======================
 backend/node_modules/
 frontend/node_modules/
-
-# ======================
-# ENV FILES
-# ======================
 backend/.env
-frontend/.env
-
-# ======================
-# DJANGO
-# ======================
-backend/db.sqlite3
-backend/__pycache__/
-backend/*.pyc
-backend/media/
-backend/staticfiles/
-
-# ======================
-# REACT BUILD
-# ======================
-frontend/build/
-
-# ======================
-# OS FILES
-# ======================
-.DS_Store
+frontend/app/.env
+backend/ecommerce/project/db.sqlite3
+backend/ecommerce/project/media/
+backend/ecommerce/project/staticfiles/
+frontend/app/build/
 Thumbs.db
-
-# ======================
-# IDE FILES
-# ======================
 .vscode/
 .idea/
-
-# ======================
-# LOG FILES
-# ======================
-*.log
