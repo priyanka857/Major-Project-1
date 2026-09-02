@@ -15,7 +15,7 @@ import Loader from "../Loader";
 import { listProductDetails } from "../../action/productAction";
 
 function ProductDetails() {
-  const apiBaseUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
+  const apiBaseUrl = window.location.hostname === "localhost" ? process.env.REACT_APP_LOCAL_API : process.env.REACT_APP_PROD_API;
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();

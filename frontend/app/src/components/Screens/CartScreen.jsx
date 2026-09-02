@@ -17,7 +17,7 @@ function CartScreen() {
   const { id: productId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const apiBaseUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
+  const apiBaseUrl = window.location.hostname === "localhost" ? process.env.REACT_APP_LOCAL_API : process.env.REACT_APP_PROD_API;
 
   const qty = Number(new URLSearchParams(location.search).get("qty")) || 1;
 

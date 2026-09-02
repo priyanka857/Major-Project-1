@@ -58,7 +58,7 @@ const ProductEditScreen = () => {
     navigate("/admin/productlist");
   };
 
-  const apiBaseUrl = process.env.REACT_APP_API_URL || "http://localhost:8000";
+  const apiBaseUrl = window.location.hostname === "localhost" ? process.env.REACT_APP_LOCAL_API : process.env.REACT_APP_PROD_API;
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
