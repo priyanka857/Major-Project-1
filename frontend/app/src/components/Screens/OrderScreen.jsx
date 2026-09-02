@@ -48,7 +48,7 @@ const OrderScreen = () => {
   const taxPrice = typeof order.taxPrice === "number" ? order.taxPrice : 0;
   const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
-  const BASE_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
+  const BASE_URL = window.location.hostname === "localhost" ? process.env.REACT_APP_LOCAL_API : process.env.REACT_APP_PROD_API;
   return loading ? (
     <Loader />
   ) : error && showError ? (

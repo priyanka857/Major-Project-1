@@ -6,7 +6,7 @@ import {
   CART_SAVE_PAYMENT_METHOD,
 } from "../constants/cartConstants";
 
-const BASE_URL = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000";
+const BASE_URL = window.location.hostname === "localhost" ? process.env.REACT_APP_LOCAL_API : process.env.REACT_APP_PROD_API;
 export const addToCart = (id, qty) => async (dispatch, getState) => {
   const { data } = await axios.get(`${BASE_URL}/api/product/${id}/`);
   dispatch({

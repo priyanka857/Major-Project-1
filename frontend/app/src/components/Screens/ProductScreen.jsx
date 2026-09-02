@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 function ProductScreen({ product }) {
   const BASE_URL =
   window.location.hostname === "localhost"
-    ? "http://127.0.0.1:8000"
-    : "https://major-project-1-azq9.onrender.com";
+    ? process.env.REACT_APP_LOCAL_API : process.env.REACT_APP_PROD_API
+
 
   const imageUrl =
     product && product.image && product.image.startsWith("/media/products/")

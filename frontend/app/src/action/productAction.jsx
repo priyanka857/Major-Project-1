@@ -19,8 +19,8 @@ import {
 
 const apiBaseUrl =
   window.location.hostname === "localhost"
-    ? "http://127.0.0.1:8000"
-    : "https://major-project-1-azq9.onrender.com";
+    ? process.env.REACT_APP_LOCAL_API : process.env.REACT_APP_PROD_API
+
 
 export const listProducts = () => async (dispatch) => {
   try {
