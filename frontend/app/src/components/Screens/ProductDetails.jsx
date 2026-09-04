@@ -48,7 +48,7 @@ function ProductDetails() {
       ) : (
         <Row>
           <Col md={6}>
-            <Image src={`${apiBaseUrl}${product.image}`} alt={product.name} fluid />
+            <Image src={product.image ? (product.image.startsWith("/media/") ? `${apiBaseUrl}${product.image}` : `${apiBaseUrl}/media/${product.image}`) : "/default-image.png"} alt={product.name} fluid />
 
           </Col>
 
@@ -124,3 +124,4 @@ function ProductDetails() {
 }
 
 export default ProductDetails;
+
